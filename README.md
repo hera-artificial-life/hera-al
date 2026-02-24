@@ -2,15 +2,28 @@
 
 **Autonomous AI agent gateway built on Claude Agent SDK.**
 
-Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Discord, WebChat) and gives it real autonomy: memory that persists across sessions, scheduled tasks, proactive actions, self-evolving skills, and distributed execution on remote nodes.
+Hera connects Claude to multiple communication channels (Telegram, WhatsApp, WebChat, Responses API) and gives it real autonomy: memory that persists across sessions, scheduled tasks, proactive actions, self-evolving skills, and distributed execution on remote nodes.
 
 ## Quick Start (Docker)
 
 ### Prerequisites
 
+Suggested server configuration: 
+
+- RAM 8GB
+- 100GB Spazio su Disco
+- Docker >= 28.2.x
+- Macchina Unix (Ubuntu Server or similar or OSX Darwin strongly suggested, also tested on Raspberrt PI >4 with limited capacity about memory)
+
+- Tailscale or similar installed, configured and working (not strictly required but mandatory for you security)
 - Docker + Docker Compose
-- [Anthropic API key](https://console.anthropic.com/)
 - [Claude Code](https://claude.ai/download) authenticated inside the container (see step 3)
+- OpenAI API Key optional for STT (whisper-1)
+- OpenRouter API KEY (or similar) for access to multimodel alternative su Claude Code via internal PicoAgent
+
+### Security is important
+
+The imperative idea with Hera è che ti installi una soluzione come tailscale e ti attivi una rete virtuale, cifrata e privata nelle quale inserisci il tuo server e i tuoi nodi esterni (per esempio il tuo mac o altri nodi). Solo tu potrai accedere a queste rete e i servizi di Hera saranno tutti esposti in modo protetto e sicuro usando https e wss.
 
 ### 3 steps
 
@@ -19,7 +32,7 @@ Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Dis
 git clone https://github.com/hera-artificial-life/hera-al.git
 cd hera-al/core
 cp .env.example .env
-# Edit .env — set ANTHROPIC_API_KEY (required), optionally add Telegram token
+# Edit .env (se devi inserire le chiavi oPENAI_API_KEY o OPENROUTER_API_KEY oppure modificare le porte 3001, 3002 su cui Hera si mette in ascolto di default)
 
 # 2. Start the container
 sh hera-start.sh
