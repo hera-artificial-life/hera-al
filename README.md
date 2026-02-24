@@ -156,7 +156,8 @@ models:
   - id: embeddinggemma
     name: Embedding Gemma
     types: [external]
-    baseURL: http://host.docker.internal:11434/api   # Ollama from inside Docker
+    apiKey: "sk-12345"                                # dummy key (Ollama doesn't need auth)
+    baseURL: http://host.docker.internal:11434/api    # Ollama from inside Docker
 ```
 
 Any OpenAI-compatible embedding endpoint works as well (e.g. OpenAI `text-embedding-3-small`, Cohere) — adjust `baseURL` and `apiKey` accordingly.
