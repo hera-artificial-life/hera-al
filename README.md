@@ -63,6 +63,8 @@ sh hera-start.sh
 
 > **Note on `hera-setup.sh`**: The installer runs inside the Docker container, so it will warn that Tailscale is not installed — this is expected and can be safely ignored (Tailscale should be installed on the **host**, not inside the container). When prompted, select **Docker configuration**, then press Enter repeatedly to accept the defaults and complete the setup.
 
+> **Note on `hera-claude.sh`**: This launches Claude Code inside the container for the first time. You will be prompted to choose your authentication method (API key, OAuth, etc.). Once authentication is complete, type `/exit` to quit Claude Code and return to the command line.
+
 Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
 
 ---
