@@ -1,5 +1,5 @@
 .env
-data/*
-!data/.gitkeep
+gmab/*
+!gmab/.gitkeep
 workspace/*
 !workspace/.gitkeep

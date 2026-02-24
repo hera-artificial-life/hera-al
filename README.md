@@ -192,7 +192,7 @@ All interaction with Anthropic services happens exclusively through the official
 
 ## Configuration
 
-After running `hera-setup.sh`, fine-tune `data/config.yaml`:
+After running `hera-setup.sh`, fine-tune `gmab/config.yaml`:
 
 - **Channels** — enable/disable Telegram, WhatsApp, WebChat, etc.
 - **Models** — model registry (Claude, OpenRouter, local models)
