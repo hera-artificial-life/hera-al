@@ -10,6 +10,7 @@ Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Dis
 
 - Docker + Docker Compose
 - [Anthropic API key](https://console.anthropic.com/)
+- [Claude Code](https://claude.ai/download) authenticated inside the container (see step 3)
 
 ### 3 steps
 
@@ -150,6 +151,12 @@ OPENROUTER_API_KEY=sk-or-...
 ```
 
 Sign up at [openrouter.ai](https://openrouter.ai/) — many models have free tiers.
+
+### Claude Code
+
+Hera requires [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) to be installed and authenticated inside the Docker container. The `hera-claude.sh` script opens Claude Code for interactive authentication.
+
+Claude Code is used exclusively through the official [Claude Agent SDK](https://github.com/anthropics/anthropic-sdk-typescript) — the published, documented API provided by Anthropic. Hera does not access, bypass, or reverse-engineer any proprietary authentication mechanisms, internal APIs, or undocumented endpoints. All interaction with Anthropic services complies fully with [Anthropic's Terms of Service](https://www.anthropic.com/terms) and the Claude Code license agreement. Users are responsible for their own API key and Claude Code subscription.
 
 ## Configuration
 
