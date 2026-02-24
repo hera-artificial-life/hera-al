@@ -10,8 +10,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "${NOSTROMO_PORT:-3001}:3001"
-      - "${RESPONSES_PORT:-3002}:3002"
+      - "${NOSTROMO_PORT:-5001}:3001"
+      - "${RESPONSES_PORT:-5002}:3002"
     volumes:
       - hera-app:/app/hera
       - hera-claude:/home/hera/.claude

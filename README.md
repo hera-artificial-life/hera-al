@@ -33,7 +33,7 @@ git clone https://github.com/hera-artificial-life/hera-al.git
 cd hera-al/core
 cp .env.example .env
 # Edit .env — add OPENAI_API_KEY or OPENROUTER_API_KEY if needed,
-# or change the default ports (3001, 3002)
+# or change the default ports (5001, 5002)
 
 # 2. Start the container
 sh hera-start.sh
@@ -46,7 +46,7 @@ sh hera-claude.sh
 sh hera-start.sh
 ```
 
-Once running, open the **Nostromo** admin panel at `http://localhost:3001/nostromo`.
+Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
 
 ---
 
