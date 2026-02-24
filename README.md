@@ -38,7 +38,7 @@ sudo tailscale serve --bg --https=15002 5002
 tailscale serve status
 ```
 
-Your services will be available at `https://<your-machine>.<tailnet>.ts.net:15001/nostromo` — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
+Run `tailscale serve status` to see your machine's HTTPS URL — it will look like `https://<your-machine>.<tailnet>.ts.net:15001`. From there, access the Nostromo admin panel at `https://<your-machine>.<tailnet>.ts.net:15001`**/nostromo** — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
 
 ### Installation
 
