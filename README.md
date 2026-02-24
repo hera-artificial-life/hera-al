@@ -1,15 +1,17 @@
 # Hera Artificial Life
 
+![Logo](./images/HERA_logo.jpg)
+
 **Autonomous AI agent gateway built on Claude Agent SDK.**
 
-Hera connects Claude to multiple communication channels (Telegram, WhatsApp, WebChat, Responses API) and gives it real autonomy: persistent memory across sessions, scheduled tasks, proactive actions, self-evolving skills, and distributed execution on remote nodes.
+Hera connects Claude to multiple communication channels (Telegram, WhatsApp, WebChat, Responses API, etc.) and gives it real autonomy: persistent memory across sessions, scheduled tasks, proactive actions, self-evolving skills, and distributed execution on remote nodes.
 
 ---
 
 ## Server Requirements
 
-- **RAM**: 8 GB minimum
-- **Disk**: 100 GB
+- **RAM**: 4 GB minimum; 8 GB or more recommended
+- **Disk**: 100 GB or more
 - **OS**: Unix-based — Ubuntu Server or similar, macOS. Also runs on Raspberry Pi 4+
 - **Docker**: >= 28.2.x with Docker Compose
 - **[Ollama](https://ollama.com/)** installed on the host with the **EmbeddingGemma** model (see [Embedding Model](#embedding-model))
@@ -36,7 +38,7 @@ sh hera-claude.sh
 sh hera-start.sh
 ```
 
-> **Note on `hera-setup.sh`**: The installer runs inside the Docker container, so it will warn that Tailscale is not installed — this is expected and can be safely ignored (Tailscale should be installed on the **host**, not inside the container). When prompted, select **Docker configuration**, then press Enter repeatedly to accept the defaults and complete the setup.
+> **Note on `hera-setup.sh`**: The installer runs inside the Docker container, so it will warn that Tailscale is not installed, this is expected and can be safely ignored (Tailscale should be installed on the **host**, not inside the container). When prompted, select **Docker configuration**, then press Enter repeatedly to accept the defaults and complete the setup.
 
 > **Note on `hera-claude.sh`**: This launches Claude Code inside the container for the first time. You will be prompted to choose your authentication method (API key, OAuth, etc.). Once authentication is complete, type `/exit` to quit Claude Code and return to the command line.
 
@@ -44,7 +46,7 @@ sh hera-start.sh
 
 ## Security
 
-Hera exposes HTTP and WebSocket services for its admin panel and remote nodes. We strongly recommend installing [Tailscale](https://tailscale.com/) (or a similar solution) to create an encrypted private network between your server and external nodes (e.g. your Mac, other machines). This way, all Hera services are only accessible within your private mesh — no ports exposed to the public internet.
+Hera exposes HTTP and WebSocket services for its admin panel and remote nodes. We strongly recommend installing [Tailscale](https://tailscale.com/) (or a similar solution) to create an encrypted private network between your server and external nodes (e.g. your Mac, other machines). This way, all Hera services are only accessible within your private mesh with no ports exposed to the public internet.
 
 Once Tailscale is installed and your server has joined the tailnet, expose Hera's services over HTTPS with `tailscale serve`:
 
@@ -71,7 +73,6 @@ Only the Claude Code subscription is strictly required. The following keys are o
 
 Used for:
 - **Speech-to-text** (Whisper) — transcribe voice messages from Telegram/WhatsApp
-- **Text-to-speech** — generate spoken responses
 - **Embeddings** — alternative to EmbeddingGemma (using `text-embedding-3-small`)
 
 ```env
@@ -123,7 +124,7 @@ Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free ti
 - **Remote nodes** — execute commands on macOS, Windows, Linux via WebSocket
 - **Admin panel ([Nostromo](#nostromo))** — real-time monitoring, configuration, session management
 - **[Pico Agents](#pico-agents)** — multi-model subagents via OpenRouter (Gemini, GPT, Grok, and more)
-- **[Dynamic UI](#dynamic-ui--plasma)** — AI-generated interactive interfaces on connected nodes
+- **[Plasma Dynamic UI](#dynamic-ui--plasma)** — AI-generated interactive applications on connected nodes
 - **[A2UI](#a2ui)** — Google A2UI v0.8 structured component rendering
 - **MCP support** — connect external MCP servers for additional tools
 - **Voice** — TTS (OpenAI, Edge, ElevenLabs) and STT (Whisper)
@@ -132,11 +133,11 @@ Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free ti
 
 ## Nostromo
 
-**Nostromo** is Hera's built-in admin panel — a web-based control center for monitoring and configuring every aspect of your agent.
+**Nostromo** is Hera's built-in admin panel, a web-based control center for monitoring and configuring every aspect of your agent.
 
 Access it at `http://localhost:5001/nostromo` or, if using Tailscale, at `https://<your-machine>.<tailnet>.ts.net:15001/nostromo`.
 
-> **First access**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key** — save it somewhere safe, as this is the password you'll need for all future logins.
+> **First access**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key**, save it somewhere safe, as this is the password you'll need for all future logins.
 
 ### What you can do from Nostromo
 
@@ -156,7 +157,7 @@ All configuration changes made through Nostromo are applied immediately — no r
 
 ## Pico Agents
 
-Pico Agents let Hera's main Claude agent delegate tasks to **lightweight subagents running on different LLM providers** — Gemini, GPT, Grok, and any model available through [OpenRouter](https://openrouter.ai/).
+Pico Agents let Hera's main Claude agent delegate tasks to **lightweight subagents running on different LLM providers**: Gemini, GPT, Grok, and any model available through [OpenRouter](https://openrouter.ai/).
 
 This enables:
 
@@ -165,13 +166,13 @@ This enables:
 - **Diverse perspectives** — different models have different strengths; combine them for better results
 - **Tool forwarding** — subagents can optionally use the same tools as the main agent (MCP servers, memory, browser, etc.)
 
-Pico Agents are configured in `config.yaml` under `agent.picoAgent` and require an **OpenRouter API key**. Each model is defined as a reference string (e.g. `Gemini Flash:google/gemini-2.0-flash`) and becomes available to the agent as an invocable subagent.
+Pico Agents are configured in `config.yaml` under `agent.picoAgent` and require an **OpenRouter API key** (equivalent solutions to OpenRouter are also supported). Each model is defined as a reference string (e.g. `Gemini Flash:google/gemini-3.0-flash`) and becomes available to the agent as an invocable subagent.
 
 ---
 
-## Dynamic UI & Plasma
+## Plasma Dynamic UI
 
-Hera can generate and render **interactive user interfaces** directly on connected desktop nodes (ElectroNode). The agent writes HTML, CSS, and JavaScript, sends it to the node, and the interface appears instantly — forms, dashboards, visualizations, games, anything a browser can render.
+Hera can generate and render **interactive user interfaces** directly on connected desktop nodes (ElectroNode and Hera OSXNode). The agent writes HTML, CSS, and JavaScript, sends it to the node, and the interface appears instantly: forms, dashboards, visualizations, games, anything a browser can render.
 
 ### Dynamic UI
 
@@ -280,19 +281,6 @@ ollama pull embeddinggemma    # ~622 MB (BF16), runs on CPU
 ### About EmbeddingGemma
 
 [EmbeddingGemma](https://developers.googleblog.com/introducing-embeddinggemma/) is a 308M parameter open embedding model by Google, built on Gemma 3. It is the highest-ranking open multilingual embedding model under 500M parameters on the [MTEB benchmark](https://huggingface.co/spaces/mteb/leaderboard).
-
-| | |
-|---|---|
-| **Parameters** | 308M |
-| **Embedding dimensions** | 768 (default), 512, 256, 128 |
-| **Context length** | 2,048 tokens |
-| **Languages** | 100+ |
-| **RAM** | < 200 MB with quantization |
-| **Ollama version** | >= 0.11.10 |
-
-Quantized variants are also available for even lower resource usage:
-- `embeddinggemma:300m-qat-q8_0` (338 MB)
-- `embeddinggemma:300m-qat-q4_0` (239 MB)
 
 ---
 
