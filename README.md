@@ -1,12 +1,21 @@
 # Hera Artificial Life
 
 <p align="center">
-  <img src="./imgs/HERA_logo.jpg" alt="Logo" width="200">
+  <img src="./imgs/HERA_logo.jpg" alt="Logo" width="300">
 </p>
 
-**Autonomous AI agent gateway built on Claude Agent SDK.**
+**The AI that doesn't just chat — it acts, evolves, and thinks ahead.**
 
-Hera connects Claude to multiple communication channels (Telegram, WhatsApp, WebChat, Responses API, etc.) and gives it real autonomy: persistent memory across sessions, scheduled tasks, proactive actions, self-evolving skills, and distributed execution on remote nodes.
+Hera is not another chatbot wrapper. It's an autonomous AI platform that combines state-of-the-art language models with unprecedented levels of autonomy, action, and self-evolution. Built on Claude Agent SDK, Hera connects to multiple communication channels while maintaining context, learning from interactions, and proactively managing tasks without constant supervision.
+
+- Proactive Actions: Schedules its own tasks, monitors events, reaches out when needed
+- Self-Programming: Creates and modifies its own skills, adapts workflows
+- Memory Evolution: Nightly consolidation transforms daily interactions into long-term knowledge with concept mapping
+- Multi-Channel Gateway: Telegram, WhatsApp, Discord, WebChat — unified interface, consistent experience
+- Nostromo Control Center: Advanced admin panel for real-time monitoring, configuration, and orchestration
+- Distributed Execution: Remote nodes for browser automation, shell execution, cross-platform actions
+- Extensible by Design: Skills, MCP tools, plugins — choose your level of integration
+- Integrates A2UI and the new Plasma Dynamic UI, a system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
 
 ---
 
@@ -316,6 +325,16 @@ hera                # Management CLI
 npm install -g @hera-al/standardnode
 hera-stdnode        # Start the node
 ```
+
+---
+
+## Philosophy: Hera vs. OpenClaw
+
+OpenClaw is the open-source framework — maximum flexibility, community-driven, all options on the table.
+
+Hera is the opinionated product — curated experience, cohesive design, decisions made for you. Think Rails vs. Express, or macOS vs. Linux.
+
+Both are valid. Hera makes choices so you don't have to. The building blocks (npm packages) are MIT licensed. The product (gateway + curated skills + Nostromo) is the Hera experience.
 
 ---
 
