@@ -61,6 +61,8 @@ sh hera-claude.sh
 sh hera-start.sh
 ```
 
+> **Note on `hera-setup.sh`**: The installer runs inside the Docker container, so it will warn that Tailscale is not installed — this is expected and can be safely ignored (Tailscale should be installed on the **host**, not inside the container). When prompted, select **Docker configuration**, then press Enter repeatedly to accept the defaults and complete the setup.
+
 Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
 
 ---
