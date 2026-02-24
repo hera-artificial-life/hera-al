@@ -94,6 +94,63 @@ Native macOS menu-bar app (Swift). AppleScript integration, native notifications
 | `hera-claude.sh` | Open Claude Code inside the container (for auth) |
 | `hera-logs.sh` | Follow container logs |
 
+## Recommended Setup
+
+These instructions target a **minimal but fully-featured** configuration. Only the Anthropic API key is strictly required — everything else is optional and unlocks additional capabilities.
+
+### Embedding Model (recommended)
+
+Hera's memory system uses semantic search to recall relevant context from past conversations. This requires an embedding model.
+
+**[Ollama](https://ollama.com/) + Embedding Gemma** is the recommended choice: it delivers excellent retrieval quality with minimal hardware requirements (runs comfortably on 2GB RAM, no GPU needed). Install Ollama on the host machine (or any reachable server), then:
+
+```bash
+ollama pull gemma3:1b   # ~815MB download, runs on CPU
+```
+
+Point Hera to it in `config.yaml`:
+```yaml
+memory:
+  search:
+    enabled: true
+    modelRef: "Embedding Gemma"    # references the model registry entry
+    embeddingModel: "gemma3:1b"
+    embeddingDimensions: 1536
+
+models:
+  - id: embeddinggemma
+    name: Embedding Gemma
+    types: [external]
+    baseURL: http://host.docker.internal:11434/api   # Ollama endpoint (from inside Docker)
+```
+
+Any OpenAI-compatible embedding API works too (OpenAI `text-embedding-3-small`, Cohere, etc.) — just point `baseURL` and `apiKey` accordingly.
+
+> **Without an embedding model**, Hera still works but memory search is disabled — the agent relies only on session context and daily markdown logs.
+
+### OpenAI API Key (optional)
+
+Used for:
+- **Speech-to-text** (Whisper) — transcribe voice messages from Telegram/WhatsApp
+- **Text-to-speech** — generate voice responses
+
+```env
+OPENAI_API_KEY=sk-...
+```
+
+### OpenRouter API Key (optional)
+
+Enables access to multiple LLM providers (GPT, Gemini, Grok, etc.) through a single API. Used for:
+- **LLM Council** — multi-model parallel reasoning with peer review
+- **Pico Agents** — lightweight subagents on non-Claude models
+- **Fallback models** — alternative models when Claude is unavailable
+
+```env
+OPENROUTER_API_KEY=sk-or-...
+```
+
+Sign up at [openrouter.ai](https://openrouter.ai/) — many models have free tiers.
+
 ## Configuration
 
 After `hera-setup.sh`, edit `data/config.yaml` for fine-tuning:
