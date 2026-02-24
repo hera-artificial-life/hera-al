@@ -50,8 +50,8 @@ cp .env.example .env
 # Edit .env — add OPENAI_API_KEY or OPENROUTER_API_KEY if needed,
 # or change the default ports (5001, 5002)
 
-# 2. Start the container
-sh hera-start.sh
+# 2. Build and start the container (first time)
+sh hera-update.sh
 
 # 3. Run the interactive setup, then authenticate Claude Code
 sh hera-setup.sh
@@ -215,8 +215,9 @@ All scripts are in the `core/` directory:
 
 | Script | Description |
 |--------|-------------|
-| `hera-start.sh` | Build and start the container |
+| `hera-start.sh` | Start or restart the container (no rebuild) |
 | `hera-stop.sh` | Stop the container |
+| `hera-update.sh` | Rebuild the container (pulls latest npm packages) |
 | `hera-setup.sh` | Run the interactive installer |
 | `hera-claude.sh` | Open Claude Code for authentication |
 | `hera-logs.sh` | Follow container logs |
