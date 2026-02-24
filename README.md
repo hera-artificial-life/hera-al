@@ -25,6 +25,21 @@ Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Web
 
 Hera exposes HTTP and WebSocket services for its admin panel and remote nodes. We strongly recommend installing [Tailscale](https://tailscale.com/) (or a similar solution) to create an encrypted private network between your server and external nodes (e.g. your Mac, other machines). This way, all Hera services are only accessible within your private mesh — no ports exposed to the public internet.
 
+Once Tailscale is installed and your server has joined the tailnet, expose Hera's services over HTTPS with `tailscale serve`:
+
+```bash
+# Expose Nostromo (admin panel + WebSocket) on https port 15001
+sudo tailscale serve --bg --https=15001 5001
+
+# Expose Responses API (WebChat) on https port 15002
+sudo tailscale serve --bg --https=15002 5002
+
+# Verify the configuration
+tailscale serve status
+```
+
+Your services will be available at `https://<your-machine>.<tailnet>.ts.net:15001/nostromo` — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
+
 ### Installation
 
 ```bash
