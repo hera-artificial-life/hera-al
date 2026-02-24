@@ -217,7 +217,7 @@ All scripts are in the `core/` directory:
 |--------|-------------|
 | `hera-start.sh` | Start or restart the container (no rebuild) |
 | `hera-stop.sh` | Stop the container |
-| `hera-update.sh` | Rebuild the container (pulls latest npm packages) |
+| `hera-update.sh` | Rebuild the container (pulls latest npm packages). After updating, it's recommended to run `hera-claude.sh` to verify that Claude Code authentication persisted correctly |
 | `hera-setup.sh` | Run the interactive installer |
 | `hera-claude.sh` | Open Claude Code for authentication |
 | `hera-logs.sh` | Follow container logs |
