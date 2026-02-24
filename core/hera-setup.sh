@@ -1,0 +1,25 @@
+#!/bin/bash
+# Initial setup of Hera inside the container
+set -e
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+. "$SCRIPT_DIR/.env" 2>/dev/null || true
+CN="${HERA_INSTANCE:-hera}"
+echo "Starting Hera setup in container '$CN'..."
+docker exec -it "$CN" bash -c "cd /app/hera && hera-install"
+echo ""
+echo "============================================"
+echo "  REMINDER: Claude Code Configuration"
+echo "============================================"
+echo ""
+echo "  If you haven't configured Claude Code yet,"
+echo "  run the following:"
+echo ""
+echo "    sh hera-claude.sh"
+echo ""
+echo "  This opens Claude Code inside the container"
+echo "  for authentication. Type /exit when done."
+echo ""
+echo "============================================"
+echo ""
+echo "Setup complete. Restart the container:"
+echo "  sh hera-start.sh"

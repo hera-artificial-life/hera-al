@@ -1,0 +1,35 @@
+services:
+  hera:
+    container_name: ${HERA_INSTANCE:-hera}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CACHE_BUST: ${CACHE_BUST:-1}
+    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${NOSTROMO_PORT:-3001}:3001"
+      - "${RESPONSES_PORT:-3002}:3002"
+    volumes:
+      - hera-app:/app/hera
+      - hera-claude:/home/hera/.claude
+      - hera-pip:/home/hera/.local
+      - "${HERA_DATA:-./data}:/app/hera/gmab"
+      - "${HERA_WORKSPACE:-./workspace}:/app/hera/workspace"
+    networks:
+      - heranet
+    restart: unless-stopped
+
+volumes:
+  hera-app:
+    name: ${HERA_INSTANCE:-hera}-app
+  hera-claude:
+    name: ${HERA_INSTANCE:-hera}-claude
+  hera-pip:
+    name: ${HERA_INSTANCE:-hera}-pip
+
+networks:
+  heranet:
+    name: heranet
