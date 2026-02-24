@@ -108,20 +108,33 @@ Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free ti
 ## Architecture
 
 ```
- Telegram / WhatsApp / WebChat / Responses API
-                    |
-            ┌───────▼───────┐
-            │  Hera Gateway  │  ← Claude Agent SDK
-            │  (@hera-al/    │
-            │   server)      │
-            └──┬────┬────┬──┘
-               │    │    │
-          ┌────┘    │    └────┐
-          ▼         ▼         ▼
-       Skills    Cron     Remote Nodes
-      (bundled   Jobs    (ElectroNode,
-       + custom)          OSXNode,
-                          StandardNode)
+ ┌─────────────────────────────────────────────────────────────┐
+│                     COMMUNICATION LAYER                      │
+│  Telegram • WhatsApp • Discord • WebChat • Voice • Browser  │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                      HERA GATEWAY                            │
+│  • Session Management      • Multi-format rendering         │
+│  • Permission System       • Cron Scheduler                  │
+│  • Memory Pipeline         • Nostromo Admin Panel            │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────────┐
+│                  CLAUDE AGENT SDK                            │
+│  Claude Sonnet 4.5 • Tool orchestration • Streaming         │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+         ┌───────────────┴───────────────┬─────────────────┐
+         │                               │                 │
+┌────────▼────────┐           ┌─────────▼──────┐  ┌───────▼────────┐
+│  SKILLS         │           │  MCP SERVERS   │  │  REMOTE NODES  │
+│  • Google WS    │           │  • Custom      │  │  • OSXNode     │
+│  • xAI Search   │           │  • Community   │  │  • Browser CDP │
+│  • Apple Notes  │           │  • External    │  │  • Shell Exec  │
+│  • Dreaming     │           │                │  │                │
+│  • Custom...    │           │                │  │                │
+└─────────────────┘           └────────────────┘  └────────────────┘
 ```
 
 ---
