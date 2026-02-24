@@ -67,6 +67,8 @@ sh hera-start.sh
 
 Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
 
+> **First access to Nostromo**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key** — save it somewhere safe, as this is the password you'll need for all future logins.
+
 ---
 
 ## Architecture
