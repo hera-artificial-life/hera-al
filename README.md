@@ -8,14 +8,14 @@
 
 Hera is not another chatbot wrapper. It's an autonomous AI platform that combines state-of-the-art language models with unprecedented levels of autonomy, action, and self-evolution. Built on Claude Agent SDK, Hera connects to multiple communication channels while maintaining context, learning from interactions, and proactively managing tasks without constant supervision.
 
-- Proactive Actions: Schedules its own tasks, monitors events, reaches out when needed
-- Self-Programming: Creates and modifies its own skills, adapts workflows
-- Memory Evolution: Nightly consolidation transforms daily interactions into long-term knowledge with concept mapping
-- Multi-Channel Gateway: Telegram, WhatsApp, Discord, WebChat — unified interface, consistent experience
-- Nostromo Control Center: Advanced admin panel for real-time monitoring, configuration, and orchestration
-- Distributed Execution: Remote nodes for browser automation, shell execution, cross-platform actions
-- Extensible by Design: Skills, MCP tools, plugins — choose your level of integration
-- Integrates A2UI and the new Plasma Dynamic UI, a system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
+- **Proactive Actions**: Schedules its own tasks, monitors events, reaches out when needed
+- **Self-Programming**: Creates and modifies its own skills, adapts workflows
+- **Memory Evolution**: Nightly consolidation transforms daily interactions into long-term knowledge with concept mapping
+- **Multi-Channel Gateway**: Telegram, WhatsApp, Discord, WebChat; unified interface, consistent experience
+- **Nostromo Control Center**: Advanced admin panel for real-time monitoring, configuration, and orchestration
+- **Distributed Execution**: Remote nodes for browser automation, shell execution, cross-platform actions
+- **Extensible by Design**: Skills, MCP tools, plugins, choose your level of integration
+- Integrates A2UI and **the new Plasma Dynamic UI**, a system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
 
 ---
 
