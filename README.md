@@ -6,41 +6,47 @@ Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Web
 
 ---
 
-## Quick Start (Docker)
-
-### Server Requirements
+## Server Requirements
 
 - **RAM**: 8 GB minimum
 - **Disk**: 100 GB
-- **OS**: Unix-based — Ubuntu Server or macOS recommended. Also tested on Raspberry Pi 4+ (with reduced memory capacity)
+- **OS**: Unix-based — Ubuntu Server or macOS recommended. Also runs on Raspberry Pi 4+
 - **Docker**: >= 28.2.x with Docker Compose
+- **[Ollama](https://ollama.com/)** installed on the host with the **EmbeddingGemma** model (see below)
+- **[Claude Code](https://claude.ai/download)** subscription (authenticated inside the container)
 
-### API Keys
+### Embedding Model
 
-- [Claude Code](https://claude.ai/download) subscription — authenticated inside the container (see step 3)
-- **OpenAI API key** (optional) — enables speech-to-text via Whisper
-- **OpenRouter API key** (optional) — enables multi-model access (GPT, Gemini, Grok, etc.) via the internal Pico Agent system
+Hera's memory system uses semantic search to recall relevant context from past conversations. The default configuration assumes **[Ollama](https://ollama.com/) + [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma)** as the embedding model.
 
-### Security
-
-Hera exposes HTTP and WebSocket services for its admin panel and remote nodes. We strongly recommend installing [Tailscale](https://tailscale.com/) (or a similar solution) to create an encrypted private network between your server and external nodes (e.g. your Mac, other machines). This way, all Hera services are only accessible within your private mesh — no ports exposed to the public internet.
-
-Once Tailscale is installed and your server has joined the tailnet, expose Hera's services over HTTPS with `tailscale serve`:
+Install Ollama on the host machine, then pull the model:
 
 ```bash
-# Expose Nostromo (admin panel + WebSocket) on https port 15001
-sudo tailscale serve --bg --https=15001 5001
-
-# Expose Responses API (WebChat) on https port 15002
-sudo tailscale serve --bg --https=15002 5002
-
-# Verify the configuration
-tailscale serve status
+ollama pull embeddinggemma    # ~622 MB (BF16), runs on CPU
 ```
 
-Run `tailscale serve status` to see your machine's HTTPS URL — it will look like `https://<your-machine>.<tailnet>.ts.net:15001`. From there, access the Nostromo admin panel at `https://<your-machine>.<tailnet>.ts.net:15001`**/nostromo** — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
+> Alternatively, you can use OpenAI's `text-embedding-3-small` or any other OpenAI-compatible embedding endpoint by changing `embeddingModel`, `baseURL`, and `apiKey` in `config.yaml`. The default configuration, however, assumes EmbeddingGemma via Ollama.
 
-### Installation
+#### About EmbeddingGemma
+
+[EmbeddingGemma](https://developers.googleblog.com/introducing-embeddinggemma/) is a 308M parameter open embedding model by Google, built on Gemma 3. It is the highest-ranking open multilingual embedding model under 500M parameters on the [MTEB benchmark](https://huggingface.co/spaces/mteb/leaderboard).
+
+| | |
+|---|---|
+| **Parameters** | 308M |
+| **Embedding dimensions** | 768 (default), 512, 256, 128 |
+| **Context length** | 2,048 tokens |
+| **Languages** | 100+ |
+| **RAM** | < 200 MB with quantization |
+| **Ollama version** | >= 0.11.10 |
+
+Quantized variants are also available for even lower resource usage:
+- `embeddinggemma:300m-qat-q8_0` (338 MB)
+- `embeddinggemma:300m-qat-q4_0` (239 MB)
+
+---
+
+## Installation
 
 ```bash
 # 1. Clone and configure
@@ -68,6 +74,57 @@ sh hera-start.sh
 Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
 
 > **First access to Nostromo**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key** — save it somewhere safe, as this is the password you'll need for all future logins.
+
+---
+
+## Security
+
+Hera exposes HTTP and WebSocket services for its admin panel and remote nodes. We strongly recommend installing [Tailscale](https://tailscale.com/) (or a similar solution) to create an encrypted private network between your server and external nodes (e.g. your Mac, other machines). This way, all Hera services are only accessible within your private mesh — no ports exposed to the public internet.
+
+Once Tailscale is installed and your server has joined the tailnet, expose Hera's services over HTTPS with `tailscale serve`:
+
+```bash
+# Expose Nostromo (admin panel + WebSocket) on https port 15001
+sudo tailscale serve --bg --https=15001 5001
+
+# Expose Responses API (WebChat) on https port 15002
+sudo tailscale serve --bg --https=15002 5002
+
+# Verify the configuration
+tailscale serve status
+```
+
+Run `tailscale serve status` to see your machine's HTTPS URL — it will look like `https://<your-machine>.<tailnet>.ts.net:15001`. From there, access the Nostromo admin panel at `https://<your-machine>.<tailnet>.ts.net:15001`**/nostromo** — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
+
+---
+
+## API Keys
+
+Only the Claude Code subscription is strictly required. The following keys are optional and unlock additional capabilities.
+
+### OpenAI API Key (optional)
+
+Used for:
+- **Speech-to-text** (Whisper) — transcribe voice messages from Telegram/WhatsApp
+- **Text-to-speech** — generate spoken responses
+- **Embeddings** — alternative to EmbeddingGemma (using `text-embedding-3-small`)
+
+```env
+OPENAI_API_KEY=sk-...
+```
+
+### OpenRouter API Key (optional)
+
+Provides access to multiple LLM providers (GPT, Gemini, Grok, etc.) through a single API:
+- **LLM Council** — multi-model parallel reasoning with peer review
+- **Pico Agents** — lightweight subagents running on non-Claude models
+- **Fallback models** — alternatives when Claude is unavailable
+
+```env
+OPENROUTER_API_KEY=sk-or-...
+```
+
+Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free tiers.
 
 ---
 
@@ -128,67 +185,6 @@ Native macOS menu-bar app built with Swift. AppleScript integration, native noti
 
 ---
 
-## Recommended Setup
-
-The quick start above covers a **minimal** installation. The following optional components unlock additional capabilities.
-
-### Embedding Model (recommended)
-
-Hera's memory includes a semantic search layer that recalls relevant context from past conversations. To enable it, you need an embedding model.
-
-The recommended choice is **[Ollama](https://ollama.com/) + Gemma 3 1B**: excellent retrieval quality with minimal hardware requirements — runs comfortably on 2 GB of RAM, no GPU needed. Install Ollama on the host (or any reachable machine), then pull the model:
-
-```bash
-ollama pull gemma3:1b   # ~815 MB, runs on CPU
-```
-
-Then point Hera to it in `config.yaml`:
-
-```yaml
-memory:
-  search:
-    enabled: true
-    modelRef: "Embedding Gemma"
-    embeddingModel: "gemma3:1b"
-    embeddingDimensions: 1536
-
-models:
-  - id: embeddinggemma
-    name: Embedding Gemma
-    types: [external]
-    apiKey: "sk-12345"                                # dummy key (Ollama doesn't need auth)
-    baseURL: http://host.docker.internal:11434/api    # Ollama from inside Docker
-```
-
-Any OpenAI-compatible embedding endpoint works as well (e.g. OpenAI `text-embedding-3-small`, Cohere) — adjust `baseURL` and `apiKey` accordingly.
-
-> **Without an embedding model** Hera still works, but memory search is disabled. The agent relies on session context and daily markdown logs only.
-
-### OpenAI API Key (optional)
-
-Enables voice features:
-- **Speech-to-text** (Whisper) — transcribe voice messages from Telegram/WhatsApp
-- **Text-to-speech** — generate spoken responses
-
-```env
-OPENAI_API_KEY=sk-...
-```
-
-### OpenRouter API Key (optional)
-
-Provides access to multiple LLM providers (GPT, Gemini, Grok, etc.) through a single API:
-- **LLM Council** — multi-model parallel reasoning with peer review
-- **Pico Agents** — lightweight subagents running on non-Claude models
-- **Fallback models** — alternatives when Claude is unavailable
-
-```env
-OPENROUTER_API_KEY=sk-or-...
-```
-
-Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free tiers.
-
----
-
 ## Claude Code
 
 Hera requires [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) installed and authenticated inside the Docker container. The `hera-claude.sh` script opens an interactive session for authentication.
@@ -220,7 +216,7 @@ All scripts are in the `core/` directory:
 |--------|-------------|
 | `hera-start.sh` | Start or restart the container (no rebuild) |
 | `hera-stop.sh` | Stop the container |
-| `hera-update.sh` | Rebuild the container (pulls latest npm packages). After updating, it's recommended to run `hera-claude.sh` to verify that Claude Code authentication persisted correctly |
+| `hera-update.sh` | Rebuild the container (pulls latest npm packages). After updating, run `hera-claude.sh` to verify auth |
 | `hera-setup.sh` | Run the interactive installer |
 | `hera-claude.sh` | Open Claude Code for authentication |
 | `hera-logs.sh` | Follow container logs |
