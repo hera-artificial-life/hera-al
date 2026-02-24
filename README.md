@@ -1,6 +1,6 @@
 # Hera Artificial Life
 
-![Logo](./images/HERA_logo.jpg)
+![Logo](./imgs/HERA_logo.jpg)
 
 **Autonomous AI agent gateway built on Claude Agent SDK.**
 
