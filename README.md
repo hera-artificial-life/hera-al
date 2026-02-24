@@ -10,41 +10,10 @@ Hera connects Claude to multiple communication channels (Telegram, WhatsApp, Web
 
 - **RAM**: 8 GB minimum
 - **Disk**: 100 GB
-- **OS**: Unix-based — Ubuntu Server or macOS recommended. Also runs on Raspberry Pi 4+
+- **OS**: Unix-based — Ubuntu Server or similar, macOS. Also runs on Raspberry Pi 4+
 - **Docker**: >= 28.2.x with Docker Compose
-- **[Ollama](https://ollama.com/)** installed on the host with the **EmbeddingGemma** model (see below)
+- **[Ollama](https://ollama.com/)** installed on the host with the **EmbeddingGemma** model (see [Embedding Model](#embedding-model))
 - **[Claude Code](https://claude.ai/download)** subscription (authenticated inside the container)
-
-### Embedding Model
-
-Hera's memory system uses semantic search to recall relevant context from past conversations. The default configuration assumes **[Ollama](https://ollama.com/) + [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma)** as the embedding model.
-
-Install Ollama on the host machine, then pull the model:
-
-```bash
-ollama pull embeddinggemma    # ~622 MB (BF16), runs on CPU
-```
-
-> Alternatively, you can use OpenAI's `text-embedding-3-small` or any other OpenAI-compatible embedding endpoint by changing `embeddingModel`, `baseURL`, and `apiKey` in `config.yaml`. The default configuration, however, assumes EmbeddingGemma via Ollama.
-
-#### About EmbeddingGemma
-
-[EmbeddingGemma](https://developers.googleblog.com/introducing-embeddinggemma/) is a 308M parameter open embedding model by Google, built on Gemma 3. It is the highest-ranking open multilingual embedding model under 500M parameters on the [MTEB benchmark](https://huggingface.co/spaces/mteb/leaderboard).
-
-| | |
-|---|---|
-| **Parameters** | 308M |
-| **Embedding dimensions** | 768 (default), 512, 256, 128 |
-| **Context length** | 2,048 tokens |
-| **Languages** | 100+ |
-| **RAM** | < 200 MB with quantization |
-| **Ollama version** | >= 0.11.10 |
-
-Quantized variants are also available for even lower resource usage:
-- `embeddinggemma:300m-qat-q8_0` (338 MB)
-- `embeddinggemma:300m-qat-q4_0` (239 MB)
-
----
 
 ## Installation
 
@@ -71,10 +40,6 @@ sh hera-start.sh
 
 > **Note on `hera-claude.sh`**: This launches Claude Code inside the container for the first time. You will be prompted to choose your authentication method (API key, OAuth, etc.). Once authentication is complete, type `/exit` to quit Claude Code and return to the command line.
 
-Once running, open the **Nostromo** admin panel at `http://localhost:5001/nostromo`.
-
-> **First access to Nostromo**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key** — save it somewhere safe, as this is the password you'll need for all future logins.
-
 ---
 
 ## Security
@@ -94,7 +59,7 @@ sudo tailscale serve --bg --https=15002 5002
 tailscale serve status
 ```
 
-Run `tailscale serve status` to see your machine's HTTPS URL — it will look like `https://<your-machine>.<tailnet>.ts.net:15001`. From there, access the Nostromo admin panel at `https://<your-machine>.<tailnet>.ts.net:15001`**/nostromo** — encrypted, authenticated, and accessible only from devices on your tailnet. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
+Run `tailscale serve status` to see your machine's HTTPS URL — it will look like `https://<your-machine>.<tailnet>.ts.net:15001`. Remote nodes (ElectroNode, OSXNode, StandardNode) should use the `wss://` endpoint on port 15001 to connect securely.
 
 ---
 
@@ -117,7 +82,7 @@ OPENAI_API_KEY=sk-...
 
 Provides access to multiple LLM providers (GPT, Gemini, Grok, etc.) through a single API:
 - **LLM Council** — multi-model parallel reasoning with peer review
-- **Pico Agents** — lightweight subagents running on non-Claude models
+- **Pico Agents** — lightweight subagents running on non-Claude models (see [Pico Agents](#pico-agents))
 - **Fallback models** — alternatives when Claude is unavailable
 
 ```env
@@ -156,9 +121,101 @@ Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free ti
 - **Autonomous scheduling** — cron jobs, heartbeats, nightly memory consolidation ("dreaming")
 - **Skills** — self-contained capabilities (Google Workspace, weather, SSH, and more)
 - **Remote nodes** — execute commands on macOS, Windows, Linux via WebSocket
-- **Admin panel (Nostromo)** — real-time monitoring, configuration, session management
+- **Admin panel ([Nostromo](#nostromo))** — real-time monitoring, configuration, session management
+- **[Pico Agents](#pico-agents)** — multi-model subagents via OpenRouter (Gemini, GPT, Grok, and more)
+- **[Dynamic UI](#dynamic-ui--plasma)** — AI-generated interactive interfaces on connected nodes
+- **[A2UI](#a2ui)** — Google A2UI v0.8 structured component rendering
 - **MCP support** — connect external MCP servers for additional tools
 - **Voice** — TTS (OpenAI, Edge, ElevenLabs) and STT (Whisper)
+
+---
+
+## Nostromo
+
+**Nostromo** is Hera's built-in admin panel — a web-based control center for monitoring and configuring every aspect of your agent.
+
+Access it at `http://localhost:5001/nostromo` or, if using Tailscale, at `https://<your-machine>.<tailnet>.ts.net:15001/nostromo`.
+
+> **First access**: On your first visit, click the **"Welcome! Press to continue"** button to enter the panel. Then go to **Settings** and copy the **Access Key** — save it somewhere safe, as this is the password you'll need for all future logins.
+
+### What you can do from Nostromo
+
+- **Sessions** — view active conversations across all channels, inspect message history
+- **Configuration** — edit `config.yaml` live: channels, models, memory, agent behavior, cron, TTS/STT
+- **Channels** — enable/disable Telegram, WhatsApp, WebChat, Responses API
+- **Models** — manage the model registry (Claude, OpenRouter, local models)
+- **Cron Jobs** — create, edit, enable/disable scheduled tasks
+- **Remote Nodes** — monitor connected nodes (ElectroNode, OSXNode, StandardNode), health status
+- **Memory** — inspect the agent's memory system, search history
+- **Skills** — browse installed skills and their capabilities
+- **Logs** — real-time server log streaming
+
+All configuration changes made through Nostromo are applied immediately — no restart required.
+
+---
+
+## Pico Agents
+
+Pico Agents let Hera's main Claude agent delegate tasks to **lightweight subagents running on different LLM providers** — Gemini, GPT, Grok, and any model available through [OpenRouter](https://openrouter.ai/).
+
+This enables:
+
+- **LLM Council** — ask multiple models the same question in parallel, then have them peer-review each other's answers for a synthesized, higher-quality response
+- **Cost optimization** — route simple tasks to cheaper/faster models, reserve Claude for complex reasoning
+- **Diverse perspectives** — different models have different strengths; combine them for better results
+- **Tool forwarding** — subagents can optionally use the same tools as the main agent (MCP servers, memory, browser, etc.)
+
+Pico Agents are configured in `config.yaml` under `agent.picoAgent` and require an **OpenRouter API key**. Each model is defined as a reference string (e.g. `Gemini Flash:google/gemini-2.0-flash`) and becomes available to the agent as an invocable subagent.
+
+---
+
+## Dynamic UI & Plasma
+
+Hera can generate and render **interactive user interfaces** directly on connected desktop nodes (ElectroNode). The agent writes HTML, CSS, and JavaScript, sends it to the node, and the interface appears instantly — forms, dashboards, visualizations, games, anything a browser can render.
+
+### Dynamic UI
+
+The base layer. The agent generates custom interfaces with full creative freedom:
+
+- **Any web technology** — HTML/CSS/JS, Canvas 2D, WebGL, Three.js, D3.js, Chart.js, or any CDN-hosted library
+- **Interactive elements** — buttons, inputs, canvases, and custom controls send actions back to the agent
+- **Incremental updates** — modify the running interface without reloading (change colors, add elements, update data) while preserving all state
+- **Runtime queries** — the agent can read values from the live UI (form fields, computed state, DOM)
+
+### Plasma
+
+**Plasma** is an **event-sourced application system** built on top of Dynamic UI. It turns ephemeral UI sessions into **persistent, versionable applications** — called **organisms**.
+
+How it works:
+
+1. **Create** — the agent builds an initial interface (HTML/CSS/JS + interactive elements) and saves it as an organism
+2. **Mutate** — each change is saved as a numbered JavaScript mutation (`1_add_validation.code`, `2_change_theme.code`, ...) applied in sequence
+3. **Snapshot** — every 20 mutations, an automatic snapshot is created for fast loading
+4. **Load** — load any organism instantly on any connected node, with full mutation history applied
+
+This means:
+- **Persistent apps** — UI applications survive across sessions, reboots, and node reconnections
+- **Complete history** — every change is tracked and replayable
+- **Instant loading** — smart snapshots avoid replaying hundreds of mutations
+- **Iterative development** — the agent can progressively improve an app over days or weeks
+
+Use cases: CRM dashboards, data entry forms, monitoring panels, interactive tools, games — anything the agent builds once and uses repeatedly.
+
+---
+
+## A2UI
+
+Hera supports [**A2UI (Agent-to-User Interface)**](https://github.com/nicholasgasior/a2ui-specification) v0.8 — a structured, schema-validated component system for building interactive surfaces.
+
+Unlike Dynamic UI (freeform HTML/CSS/JS), A2UI uses a **declarative component model** defined as JSONL:
+
+- **Layout** — Column, Row, Card, Divider, Tabs, Modal, List
+- **Content** — Text, Image, Icon, AudioPlayer, Video
+- **Input** — Button, TextField, CheckBox, MultipleChoice, Slider, DateTimeInput
+
+A2UI surfaces are validated against the official JSON Schema before rendering, ensuring consistent and correct interfaces. User interactions (button clicks, form submissions) are routed back to the agent as structured events with typed payloads.
+
+A2UI is ideal for **structured, form-like interfaces** where consistency and validation matter — booking forms, settings panels, data collection, step-by-step wizards. For freeform creative interfaces (visualizations, games, custom layouts), use Dynamic UI / Plasma instead.
 
 ---
 
@@ -177,7 +234,7 @@ The server runs inside Docker. All packages are installed from npm at build time
 
 ### ElectroNode (`electronode/`)
 
-Cross-platform desktop node built with Electron + React. Renders Dynamic UI and A2UI surfaces, executes shell commands locally. See [electronode/README.md](electronode/README.md).
+Cross-platform desktop node built with Electron + React. Renders Dynamic UI, Plasma organisms, and A2UI surfaces. Executes shell commands locally. See [electronode/README.md](electronode/README.md).
 
 ### OSXNode (`osxnode/`)
 
@@ -195,7 +252,7 @@ All interaction with Anthropic services happens exclusively through the official
 
 ## Configuration
 
-After running `hera-setup.sh`, fine-tune `gmab/config.yaml`:
+After running `hera-setup.sh`, fine-tune your instance via the [Nostromo](#nostromo) admin panel or by editing `gmab/config.yaml` directly:
 
 - **Channels** — enable/disable Telegram, WhatsApp, WebChat, etc.
 - **Models** — model registry (Claude, OpenRouter, local models)
@@ -205,6 +262,37 @@ After running `hera-setup.sh`, fine-tune `gmab/config.yaml`:
 - **TTS/STT** — provider, voice, model
 
 See the full [config.example.yaml](https://www.npmjs.com/package/@hera-al/server) in the npm package for all available options.
+
+---
+
+## Embedding Model
+
+Hera's memory system uses semantic search to recall relevant context from past conversations. The default configuration assumes **[Ollama](https://ollama.com/) + [EmbeddingGemma](https://ai.google.dev/gemma/docs/embeddinggemma)** as the embedding model.
+
+Install Ollama on the host machine, then pull the model:
+
+```bash
+ollama pull embeddinggemma    # ~622 MB (BF16), runs on CPU
+```
+
+> Alternatively, you can use OpenAI's `text-embedding-3-small` or any other OpenAI-compatible embedding endpoint by changing `embeddingModel`, `baseURL`, and `apiKey` in `config.yaml`. The default configuration, however, assumes EmbeddingGemma via Ollama.
+
+### About EmbeddingGemma
+
+[EmbeddingGemma](https://developers.googleblog.com/introducing-embeddinggemma/) is a 308M parameter open embedding model by Google, built on Gemma 3. It is the highest-ranking open multilingual embedding model under 500M parameters on the [MTEB benchmark](https://huggingface.co/spaces/mteb/leaderboard).
+
+| | |
+|---|---|
+| **Parameters** | 308M |
+| **Embedding dimensions** | 768 (default), 512, 256, 128 |
+| **Context length** | 2,048 tokens |
+| **Languages** | 100+ |
+| **RAM** | < 200 MB with quantization |
+| **Ollama version** | >= 0.11.10 |
+
+Quantized variants are also available for even lower resource usage:
+- `embeddinggemma:300m-qat-q8_0` (338 MB)
+- `embeddinggemma:300m-qat-q4_0` (239 MB)
 
 ---
 
