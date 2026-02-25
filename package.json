@@ -1,0 +1,9 @@
+{
+  "name": "hera-al",
+  "private": true,
+  "workspaces": [
+    "core",
+    "electronode",
+    "osxnode"
+  ]
+}

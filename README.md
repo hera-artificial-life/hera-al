@@ -164,6 +164,10 @@ Access it at `http://localhost:5001/nostromo` or, if using Tailscale, at `https:
 
 All configuration changes made through Nostromo are applied immediately — no restart required.
 
+<p align="center">
+  <img src="./imgs/nostromo-welcome.png" alt="Nostromo Admin Panel" width="700">
+</p>
+
 ---
 
 ## Pico Agents
@@ -213,6 +217,10 @@ This means:
 
 Use cases: CRM dashboards, data entry forms, monitoring panels, interactive tools, games — anything the agent builds once and uses repeatedly.
 
+<p align="center">
+  <img src="./imgs/osx-teamwindow.png" alt="ElectroNode with Dynamic UI" width="700">
+</p>
+
 ---
 
 ## A2UI
@@ -258,7 +266,7 @@ Native macOS menu-bar app built with Swift. AppleScript integration, native noti
 
 Hera requires [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) installed and authenticated inside the Docker container. The `hera-claude.sh` script opens an interactive session for authentication.
 
-All interaction with Anthropic services happens exclusively through the official [Claude Agent SDK](https://github.com/anthropics/anthropic-sdk-typescript) — the published, documented API. Hera does not access, bypass, or reverse-engineer any proprietary authentication mechanism, internal API, or undocumented endpoint. Usage complies fully with [Anthropic's Terms of Service](https://www.anthropic.com/terms) and the Claude Code license agreement. Users are responsible for their own API key and subscription.
+All API interaction uses the official [Claude Agent SDK](https://github.com/anthropics/anthropic-sdk-typescript). Usage must comply with [Anthropic's Terms of Service](https://www.anthropic.com/terms). Users are responsible for their own subscription.
 
 ---
 
