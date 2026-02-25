@@ -266,7 +266,7 @@ Native macOS menu-bar app built with Swift. AppleScript integration, native noti
 
 Hera requires [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) installed and authenticated inside the Docker container. The `hera-claude.sh` script opens an interactive session for authentication.
 
-All API interaction uses the official [Claude Agent SDK](https://github.com/anthropics/anthropic-sdk-typescript). Usage must comply with [Anthropic's Terms of Service](https://www.anthropic.com/terms). Users are responsible for their own subscription.
+All API interaction uses the official [Claude Agent SDK](https://github.com/anthropics/anthropic-sdk-typescript). Usage must comply with [Anthropic's Terms of Service](https://www.anthropic.com/terms). Users are responsible for their own API key and subscription.
 
 ---
 
