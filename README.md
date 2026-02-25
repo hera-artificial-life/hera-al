@@ -8,14 +8,17 @@
 
 Hera is not another chatbot wrapper. It's an autonomous AI platform that combines state-of-the-art language models with unprecedented levels of autonomy, action, and self-evolution. Built on Claude Agent SDK, Hera connects to multiple communication channels while maintaining context, learning from interactions, and proactively managing tasks without constant supervision.
 
-- **Proactive Actions**: Schedules its own tasks, monitors events, reaches out when needed
-- **Self-Programming**: Creates and modifies its own skills, adapts workflows
-- **Memory Evolution**: Nightly consolidation transforms daily interactions into long-term knowledge with concept mapping
-- **Multi-Channel Gateway**: Telegram, WhatsApp, Discord, WebChat; unified interface, consistent experience
-- **Nostromo Control Center**: Advanced admin panel for real-time monitoring, configuration, and orchestration
-- **Distributed Execution**: Remote nodes for browser automation, shell execution, cross-platform actions
+- **Multi-channel** — Telegram, WhatsApp, WebChat, Responses API: same agent, unified context
+- **Persistent memory** — multi-tier system: session context, daily logs, semantic search with concept graph
+- **Autonomous scheduling** — cron jobs, heartbeats, nightly memory consolidation ("dreaming")
 - **Extensible by Design**: Skills, MCP tools, plugins, choose your level of integration
-- Integrates A2UI and **the new Plasma Dynamic UI**, a system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
+- **Distributed Execution**: Remote nodes for browser automation, shell execution, cross-platform actions
+- **Admin panel ([Nostromo](#nostromo))** — real-time monitoring, configuration, session management
+- **[Pico Agents](#pico-agents)** — multi-model subagents via OpenRouter or similar services (Gemini, GPT, Grok, and more)
+- **[Plasma Dynamic UI](#dynamic-ui--plasma)** — AI-generated interactive applications on connected nodes. A system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
+- **[A2UI](#a2ui)** — Google A2UI v0.8 structured component rendering
+- **MCP support** — connect external MCP servers for additional tools
+- **Voice** — TTS (OpenAI, Edge, ElevenLabs) and STT (Whisper)
 
 ---
 
@@ -136,22 +139,6 @@ Sign up at [openrouter.ai](https://openrouter.ai/) — many models offer free ti
 │  • Custom...    │           │                │  │                │
 └─────────────────┘           └────────────────┘  └────────────────┘
 ```
-
----
-
-## Key Features
-
-- **Multi-channel** — Telegram, WhatsApp, WebChat, Responses API: same agent, unified context
-- **Persistent memory** — 3-tier system: session context, daily logs, semantic search with concept graph
-- **Autonomous scheduling** — cron jobs, heartbeats, nightly memory consolidation ("dreaming")
-- **Skills** — self-contained capabilities (Google Workspace, weather, SSH, and more)
-- **Remote nodes** — execute commands on macOS, Windows, Linux via WebSocket
-- **Admin panel ([Nostromo](#nostromo))** — real-time monitoring, configuration, session management
-- **[Pico Agents](#pico-agents)** — multi-model subagents via OpenRouter (Gemini, GPT, Grok, and more)
-- **[Plasma Dynamic UI](#dynamic-ui--plasma)** — AI-generated interactive applications on connected nodes
-- **[A2UI](#a2ui)** — Google A2UI v0.8 structured component rendering
-- **MCP support** — connect external MCP servers for additional tools
-- **Voice** — TTS (OpenAI, Edge, ElevenLabs) and STT (Whisper)
 
 ---
 
