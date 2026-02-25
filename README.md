@@ -1,7 +1,7 @@
 # Hera Artificial Life
 
 <p align="center">
-  <img src="./imgs/HERA_logo.jpg" alt="Logo" width="300">
+  <img src="./imgs/HERA_logo.png" alt="Logo" width="300">
 </p>
 
 **The AI that doesn't just chat — it acts, evolves, and thinks ahead.**
