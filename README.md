@@ -22,7 +22,7 @@ Hera is not another chatbot wrapper. It's an autonomous AI platform that combine
 ## Server Requirements
 
 - **RAM**: 4 GB minimum; 8 GB or more recommended
-- **Disk**: 100 GB or more
+- **Disk**: 25 GB or more
 - **OS**: Unix-based — Ubuntu Server or similar, macOS. Also runs on Raspberry Pi 4+
 - **Docker**: >= 28.2.x with Docker Compose
 - **[Ollama](https://ollama.com/)** installed on the host with the **EmbeddingGemma** model (see [Embedding Model](#embedding-model))
