@@ -16,6 +16,7 @@ Hera is not another chatbot wrapper. It's an autonomous AI platform that combine
 - **Admin panel ([Nostromo](#nostromo))** — real-time monitoring, configuration, session management
 - **Pico Agents** — multi-model subagents via OpenRouter or similar services (Gemini, GPT, Grok, and more)
 - **[Plasma Dynamic UI](https://helloplasma.org)** — AI-generated interactive applications on connected nodes. A system for generating applications under a ‘software-less’ paradigm, where apps are created in real time by an agent capable of perceiving and adapting to their evolution
+- **A2UI** — Google A2UI v0.8 structured component rendering
 - **[Hera OSXNode](https://github.com/hera-artificial-life/hera-al/releases/tag/osxnode-v1.0.0)** — native macOS menu bar app with multi-cell chat dashboard, voice recording, Plasma integration, and remote node management. Signed and notarized for macOS 14+
 - **MCP support** — connect external MCP servers for additional tools
 - **Voice** — TTS (OpenAI, Edge, ElevenLabs) and STT (Whisper)
