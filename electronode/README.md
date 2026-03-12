@@ -21,12 +21,22 @@ Download from [Releases](https://github.com/hera-artificial-life/hera-al/release
 
 The macOS build is signed and notarized by Apple (Developer ID: Lorenzo Toscano).
 
+### Run from source (dev mode)
+
+```bash
+cd electronode
+npm install
+npm run dev
+```
+
+The `out/` directory is included pre-built, so `npm install && npx electron .` works directly without a build step.
+
 ### Build from source
 
 ```bash
 cd electronode
 npm install
-npm run build
+npm run build         # Compile to out/
 npm run dist          # Package for current platform
 npm run dist:mac      # macOS DMG (arm64)
 npm run dist:win      # Windows installer (x64)

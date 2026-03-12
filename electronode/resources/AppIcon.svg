@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- White squircle background (smaller than canvas, transparent around) -->
+  <rect x="100" y="100" width="824" height="824" rx="180" ry="180" fill="white"/>
+
+  <!-- Ruby gem heart centered inside squircle -->
+  <g transform="translate(512, 512) scale(6.8) translate(-50, -50)">
+    <!-- Left top lobe -->
+    <polygon points="50,35 25,12 12,30" fill="#f06292"/>
+    <polygon points="25,12 8,18 12,30" fill="#e91e90"/>
+    <polygon points="8,18 5,35 12,30" fill="#d81b80"/>
+    <polygon points="50,35 12,30 5,35" fill="#c2185b"/>
+
+    <!-- Right top lobe -->
+    <polygon points="50,35 75,12 88,30" fill="#f48fb1"/>
+    <polygon points="75,12 92,18 88,30" fill="#ec407a"/>
+    <polygon points="92,18 95,35 88,30" fill="#e91e63"/>
+    <polygon points="50,35 88,30 95,35" fill="#d81b60"/>
+
+    <!-- Left top highlight facets -->
+    <polygon points="25,12 50,8 50,35" fill="#f8bbd0"/>
+    <polygon points="8,18 25,12 12,30" fill="#f06292"/>
+
+    <!-- Right top highlight facets -->
+    <polygon points="75,12 50,8 50,35" fill="#fce4ec"/>
+    <polygon points="92,18 75,12 88,30" fill="#f48fb1"/>
+
+    <!-- Center body -->
+    <polygon points="5,35 50,35 30,58" fill="#ad1457"/>
+    <polygon points="95,35 50,35 70,58" fill="#c2185b"/>
+
+    <!-- Lower center facets -->
+    <polygon points="50,35 30,58 50,92" fill="#b71c1c"/>
+    <polygon points="50,35 70,58 50,92" fill="#d32f2f"/>
+
+    <!-- Left lower -->
+    <polygon points="5,35 30,58 15,55" fill="#880e4f"/>
+    <polygon points="15,55 30,58 50,92" fill="#7b1fa2"/>
+
+    <!-- Right lower -->
+    <polygon points="95,35 70,58 85,55" fill="#ad1457"/>
+    <polygon points="85,55 70,58 50,92" fill="#9c27b0"/>
+
+    <!-- Deep center highlight -->
+    <polygon points="50,35 40,50 50,70" fill="#e53935" opacity="0.7"/>
+    <polygon points="50,35 60,50 50,70" fill="#ef5350" opacity="0.6"/>
+
+    <!-- Top edge highlights -->
+    <polygon points="50,8 25,12 35,18" fill="#fce4ec" opacity="0.8"/>
+    <polygon points="50,8 75,12 65,18" fill="#fff" opacity="0.5"/>
+
+    <!-- Subtle inner glow facets -->
+    <polygon points="35,18 50,35 25,12" fill="#f48fb1" opacity="0.4"/>
+    <polygon points="65,18 50,35 75,12" fill="#fce4ec" opacity="0.3"/>
+
+    <!-- Lightning bolt ⚡ -->
+    <polygon points="52,18 40,48 49,46 42,80 60,48 51,50" fill="#FFD600" opacity="0.95"/>
+    <polygon points="52,18 51,50 49,46 40,48" fill="#FFC107" opacity="0.3"/>
+  </g>
+</svg>

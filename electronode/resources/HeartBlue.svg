@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Faceted blue heart gem (ElectroNode variant) -->
+  <!-- Left top lobe -->
+  <polygon points="50,35 25,12 12,30" fill="#64b5f6"/>
+  <polygon points="25,12 8,18 12,30" fill="#42a5f5"/>
+  <polygon points="8,18 5,35 12,30" fill="#2196f3"/>
+  <polygon points="50,35 12,30 5,35" fill="#1e88e5"/>
+
+  <!-- Right top lobe -->
+  <polygon points="50,35 75,12 88,30" fill="#90caf9"/>
+  <polygon points="75,12 92,18 88,30" fill="#64b5f6"/>
+  <polygon points="92,18 95,35 88,30" fill="#42a5f5"/>
+  <polygon points="50,35 88,30 95,35" fill="#2196f3"/>
+
+  <!-- Left top highlight facets -->
+  <polygon points="25,12 50,8 50,35" fill="#bbdefb"/>
+  <polygon points="8,18 25,12 12,30" fill="#64b5f6"/>
+
+  <!-- Right top highlight facets -->
+  <polygon points="75,12 50,8 50,35" fill="#e3f2fd"/>
+  <polygon points="92,18 75,12 88,30" fill="#90caf9"/>
+
+  <!-- Center body -->
+  <polygon points="5,35 50,35 30,58" fill="#1976d2"/>
+  <polygon points="95,35 50,35 70,58" fill="#1e88e5"/>
+
+  <!-- Lower center facets -->
+  <polygon points="50,35 30,58 50,92" fill="#1565c0"/>
+  <polygon points="50,35 70,58 50,92" fill="#1976d2"/>
+
+  <!-- Left lower -->
+  <polygon points="5,35 30,58 15,55" fill="#0d47a1"/>
+  <polygon points="15,55 30,58 50,92" fill="#1565c0"/>
+
+  <!-- Right lower -->
+  <polygon points="95,35 70,58 85,55" fill="#1976d2"/>
+  <polygon points="85,55 70,58 50,92" fill="#1976d2"/>
+
+  <!-- Deep center highlight -->
+  <polygon points="50,35 40,50 50,70" fill="#2196f3" opacity="0.7"/>
+  <polygon points="50,35 60,50 50,70" fill="#42a5f5" opacity="0.6"/>
+
+  <!-- Top edge highlights -->
+  <polygon points="50,8 25,12 35,18" fill="#e3f2fd" opacity="0.8"/>
+  <polygon points="50,8 75,12 65,18" fill="#fff" opacity="0.5"/>
+
+  <!-- Subtle inner glow facets -->
+  <polygon points="35,18 50,35 25,12" fill="#90caf9" opacity="0.4"/>
+  <polygon points="65,18 50,35 75,12" fill="#e3f2fd" opacity="0.3"/>
+
+  <!-- Lightning bolt ⚡ -->
+  <polygon points="52,18 40,48 49,46 42,80 60,48 51,50" fill="#FFD600" opacity="0.95"/>
+  <polygon points="52,18 51,50 49,46 40,48" fill="#FFC107" opacity="0.3"/>
+</svg>
