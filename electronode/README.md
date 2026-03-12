@@ -12,7 +12,14 @@ Connects to a running Hera server via WebSocket and provides:
 
 ### Pre-built binaries
 
-Download from [Releases](https://github.com/hera-artificial-life/hera-al/releases) (coming soon).
+Download from [Releases](https://github.com/hera-artificial-life/hera-al/releases/tag/electronode-v0.1.0):
+
+| Platform | Download |
+|----------|----------|
+| macOS (Apple Silicon) | [ElectroNode-0.1.0-mac-arm64.dmg](https://github.com/hera-artificial-life/hera-al/releases/download/electronode-v0.1.0/ElectroNode-0.1.0-mac-arm64.dmg) |
+| Windows (x64) | [ElectroNode-0.1.0-win-x64.exe](https://github.com/hera-artificial-life/hera-al/releases/download/electronode-v0.1.0/ElectroNode-0.1.0-win-x64.exe) |
+
+The macOS build is signed and notarized by Apple (Developer ID: Lorenzo Toscano).
 
 ### Build from source
 
@@ -37,9 +44,3 @@ Config is stored in:
 - macOS: `~/Library/Application Support/ElectroNode/config.yaml`
 - Windows: `%APPDATA%/ElectroNode/config.yaml`
 - Linux: `~/.config/ElectroNode/config.yaml`
-
-## npm package
-
-```bash
-npm install @hera-al/electronode  # coming soon
-```
